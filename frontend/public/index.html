@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bicycle Store</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bicycle Store</h1>
+    <nav>
+      <ul>
+        <li><a href="#" id="home-link">Home</a></li>
+        <li><a href="#" id="login-link">Login</a></li>
+        <li><a href="#" id="register-link">Register</a></li>
+        <li><a href="#" id="orders-link">Orders</a></li>
+        <li><a href="#" id="user-management-link" onclick="showUserManagement()">User Management</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Страница товаров -->
+    <section id="products-section">
+      <h2>Products</h2>
+      <div id="products-list"></div>
+      <button id="add-product-btn">Add Product</button>
+      <button id="delete-product-btn">Delete Product</button>
+    </section>
+
+    <!-- Форма добавления товара -->
+    <section id="add-product-section" style="display: none;">
+      <h2>Add Product</h2>
+      <form id="add-product-form">
+        <label for="add-product-name">Name:</label>
+        <input type="text" id="add-product-name" required autocomplete="off">
+
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" required autocomplete="off">
+
+        <label for="add-product-category">Category:</label>
+        <input type="text" id="add-product-category" required autocomplete="off">
+
+
+        <label for="add-product-min-stock">Min Stock:</label>
+        <input type="number" id="add-product-min-stock" placeholder="Min stock" autocomplete="off">
+
+
+        <label for="description">Description:</label>
+        <textarea id="description" required autocomplete="off"></textarea>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" required autocomplete="off">
+
+        <button type="submit">Add</button>
+      </form>
+    </section>
+
+    <!-- Форма обновления товара -->
+    <section id="update-product-section" style="display: none;">
+      <h2>Update Product</h2>
+      <form id="update-product-form">
+        <label for="update-id">Product ID:</label>
+        <input type="text" id="update-id" required>
+        <label for="update-name">Name:</label>
+        <input type="text" id="update-name">
+        <label for="update-price">Price:</label>
+        <input type="number" id="update-price">
+        <label for="update-category">Category:</label>
+        <input type="text" id="update-category">
+        <label for="update-stock">Stock:</label>
+        <input type="number" id="update-stock">
+        <label for="update-description">Description:</label>
+        <textarea id="update-description"></textarea>
+        <label for="update-image">Image URL:</label>
+        <input type="text" id="update-image">
+        <button type="submit">Update</button>
+      </form>
+    </section>
+
+    <!-- Форма входа -->
+    <section id="login-section" style="display: none;">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="email-login">Email:</label>
+        <input type="email" id="email-login" required autocomplete="email">
+
+        <label for="password-login">Password:</label>
+        <input type="password" id="password-login" required autocomplete="current-password">
+
+        <button type="submit">Login</button>
+      </form>
+    </section>
+
+    <!-- Форма регистрации -->
+    <section id="register-section" style="display: none;">
+      <h2>Register</h2>
+      <form id="register-form">
+        <label for="name-register">Name:</label>
+        <input type="text" id="name-register" required autocomplete="name">
+
+        <label for="email-register">Email:</label>
+        <input type="email" id="email-register" required autocomplete="email">
+
+        <label for="password-register">Password:</label>
+        <input type="password" id="password-register" required autocomplete="new-password">
+
+        <button type="submit">Register</button>
+      </form>
+    </section>
+
+    <!-- Форма поиска -->
+    <section id="search-section" style="display: none;">
+      <h2>Search Products</h2>
+      <form id="search-form">
+        <label for="search-name">Name:</label>
+        <input type="text" id="search-name" placeholder="Product name">
+    
+        <label for="search-category">Category:</label>
+        <input type="text" id="search-category" placeholder="Category">
+    
+        <label for="search-min-price">Min Price:</label>
+        <input type="number" id="search-min-price" placeholder="Min price">
+    
+        <label for="search-max-price">Max Price:</label>
+        <input type="number" id="search-max-price" placeholder="Max price">
+    
+        <label for="search-min-stock">Min Stock:</label>
+        <input type="number" id="search-min-stock" placeholder="Min stock">
+    
+        <button type="submit">Search</button>
+      </form>
+    
+      <div id="search-results"></div>
+    </section>
+
+    <!-- Страница заказов -->
+    <section id="orders-section">
+      <h2>Orders</h2>
+      <div id="orders-list"></div>
+      <button id="checkout-btn">Checkout</button>
+    </section>
+
+    <!-- Управление пользователями -->
+    <section id="user-management-section" style="display: none;">
+      <h2>User Management</h2>
+      <h3>Update User</h3>
+      <input type="text" id="userId" placeholder="User ID" required>
+      <input type="text" id="name" placeholder="New Name">
+      <input type="email" id="email" placeholder="New Email">
+      <label for="status">Status:</label>
+      <select id="status">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button onclick="updateUser()">Update User</button>
+      
+      <h3>Delete User</h3>
+      <input type="text" id="userIdDelete" placeholder="User ID" required>
+      <button onclick="deleteUser()">Delete User</button>
+
+      <h3>Two-Factor Authentication</h3>
+      <button onclick="toggleTwoFactor()">Toggle Two-Factor Authentication</button>
+    </section>
+
+    <!-- Секция для двухфакторной аутентификации -->
+    <section id="two-factor-section" style="display: none;">
+      <h2>Two-Factor Authentication</h2>
+      <form id="two-factor-form">
+        <input type="hidden" id="2fa-user-id" />
+        <label for="2fa-token">Enter your 2FA code:</label>
+        <input type="text" id="2fa-token" required />
+        <button type="submit">Verify</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Функция для отображения секции управления пользователями
+    function showUserManagement() {
+      // Скрываем все секции
+      const sections = [
+        'products-section',
+        'add-product-section',
+        'update-product-section',
+        'login-section',
+        'register-section',
+        'orders-section',
+        'two-factor-section',
+        'search-section', // Добавляем секцию поиска
+      ];
+      sections.forEach(section => {
+        document.getElementById(section).style.display = 'none';
+      });
+
+      // Показываем секцию управления пользователями
+      document.getElementById('user-management-section').style.display = 'block';
+    }
+
+    // Функция для обновления пользователя
+    async function updateUser() {
+      const userId = document.getElementById('userId').value;
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const status = document.getElementById('status').value;
+
+      const token = localStorage.getItem('token'); // Получаем токен из localStorage
+
+      if (!token) {
+        alert("You must be logged in to perform this action.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/auth/update`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Отправляем токен в заголовке
+          },
+          body: JSON.stringify({ userId, name, email, status }),
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error("Error updating user:", error);
+        alert("Failed to update user.");
+      }
+    }
+
+    // Функция для удаления пользователя
+    async function deleteUser() {
+      const userId = document.getElementById('userIdDelete').value;
+
+      const token = localStorage.getItem('token'); // Получаем токен из localStorage
+
+      if (!token) {
+        alert("You must be logged in to perform this action.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/auth/delete`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Отправляем токен в заголовке
+          },
+          body: JSON.stringify({ userId }),
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        alert("Failed to delete user.");
+      }
+    }
+
+    // Функция для включения/отключения двухфакторной аутентификации
+    async function toggleTwoFactor() {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        alert("You must be logged in to perform this action.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/auth/toggleTwoFactor`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        const result = await response.json();
+        alert(result.message);
+      } catch (error) {
+        console.error("Error toggling two-factor authentication:", error);
+        alert("Failed to toggle two-factor authentication.");
+      }
+    }
+  </script>
+</body>
+</html>

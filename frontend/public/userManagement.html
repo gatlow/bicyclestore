@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+    <script>
+        async function updateUser() {
+            const userId = document.getElementById('userId').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            const response = await fetch(`/api/auth/update`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, name, email }),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        async function deleteUser() {
+            const userId = document.getElementById('userIdDelete').value; // Изменено на уникальный ID
+
+            const response = await fetch(`/api/auth/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId }), // Добавлено тело запроса с userId
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+    </script>
+</head>
+<body>
+    <h1>Управление пользователями</h1>
+    <h2>Обновить пользователя</h2>
+    <input type="text" id="userId" placeholder="ID пользователя" required>
+    <input type="text" id="name" placeholder="Новое имя">
+    <input type="email" id="email" placeholder="Новая электронная почта">
+    <button onclick="updateUser()">Обновить</button>
+
+    <h2>Удалить пользователя</h2>
+    <input type="text" id="userIdDelete" placeholder="ID пользователя" required> <!-- Изменено на уникальный ID -->
+    <button onclick="deleteUser()">Удалить</button>
+</body>
+</html>
